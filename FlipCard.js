@@ -41,14 +41,18 @@ var FlipCard = React.createClass({
     },
 
     render() {
-        const rotateX = this.state.animatedValue.interpolate({
+        const rotation = this.state.animatedValue.interpolate({
             inputRange: [0, 0.5, 1],
             outputRange: ['0deg', '360deg', '0deg']
         });
+        
+        const { horizontal } = this.props;
+        
+        
         return (
             <TouchableOpacity onPress={this._flipToggleCard} style={styles.animatedContainer}>
                 <Animated.View
-                    style={[styles.animatedContainer,{transform: [{rotateX}]}]}>
+                    style={[styles.animatedContainer,{transform: [{[ horizontal ? 'rotateZ' : 'rotateX' ]: rotation }]}]}>
                     {this.flippedCardView(this.state.isFlipped)}
                 </Animated.View>
             </TouchableOpacity>);
